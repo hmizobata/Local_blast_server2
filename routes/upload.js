@@ -27,9 +27,9 @@ const uploadplace = ".\\uploads\\";
 */
 
 //サーバー用
-const makeblastdbplace = "/suikou/tool/ncbi-blast-2.6.0+/bin/makeblastdb";
-const seqserver = "/data2/sequenceserver/sequenceserver-1.0.14";
-const dbplace = seqserver + "/db";
+const makeblastdbplace = "/suikou/tool/ncbi-blast-2.13.0+/bin/makeblastdb";
+const seqserver = "/data2/sequenceserver/sequenceserver-2.0.0-db";
+const dbplace = seqserver;
 const tmpplace = seqserver + "/tmp/";
 const dbdna = dbplace + "/db_nucleotide/";
 const dbprotein = dbplace + "/db_protein/";
