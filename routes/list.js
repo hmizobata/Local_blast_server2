@@ -15,11 +15,11 @@ const makeblastdbplace =
 */
 
 //サーバ用
-const dbdna = "/data2/sequenceserver/sequenceserver-1.0.14/db/db_nucleotide/";
-const dbprotein = "/data2/sequenceserver/sequenceserver-1.0.14/db/db_protein/";
-const seqserver = "/data2/sequenceserver/sequenceserver-1.0.14";
+const dbdna = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_nucleotide/";
+const dbprotein = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_protein/";
+const seqserver = "/data2/sequenceserver/sequenceserver-2.0.0-db";
 const tmpplace = seqserver + "/tmp/";
-const makeblastdbplace = "/suikou/tool/ncbi-blast-2.6.0+/bin/makeblastdb";
+const makeblastdbplace = "/suikou/tool/ncbi-blast-2.13.0+/bin/makeblastdb";
 
 
 function dremove(){
