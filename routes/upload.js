@@ -9,7 +9,7 @@ const { stdout } = require('process');
 const { callbackify } = require('util');
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, "/data2/sequenceserver/sequenceserver-1.0.14/uploads/")
+    cb(null, "/data2/sequenceserver/sequenceserver-2.0.0-db/uploads/")
   },
   filename: function(req, file, cb){
     cb(null, file.originalname)
