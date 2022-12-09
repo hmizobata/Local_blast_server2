@@ -1,0 +1,314 @@
+extends layout
+
+block content
+	head 
+		script.
+			function dselectall(){
+				let dcheckarray = [];
+				let dcheckelement = document.getElementsByClassName("dcheckbox");
+				
+				for(let i = 0; i < dcheckelement.length; i++)
+				{
+					if(dcheckelement[i].checked)
+						dcheckarray.push(dcheckelement[i].value);
+				}
+
+				if(dcheckarray.length==dcheckelement.length)
+					for(let i = 0; i < dcheckelement.length; i++)
+						dcheckelement[i].checked = false;
+				else 
+					for(let i = 0; i < dcheckelement.length; i++)
+						dcheckelement[i].checked = true;
+				
+				ptoggle();
+				}
+
+
+			function pselectall(){
+				let pcheckarray = [];
+				let pcheckelement = document.getElementsByClassName("pcheckbox");
+				
+				for(let i = 0; i < pcheckelement.length; i++)
+				{
+					if(pcheckelement[i].checked)
+						pcheckarray.push(pcheckelement[i].value);
+				}
+
+				if(pcheckarray.length==pcheckelement.length)
+					for(let i = 0; i < pcheckelement.length; i++)
+						pcheckelement[i].checked = false;
+				else 
+					for(let i = 0; i < pcheckelement.length; i++)
+						pcheckelement[i].checked = true;
+				
+				dtoggle();
+				}
+
+
+			function ptoggle(){
+				let dcheckarray = [];
+				let dcheckelement = document.getElementsByClassName("dcheckbox");
+				let plisttable = document.getElementById("plisttable");
+
+				for(let i= 0; i < dcheckelement.length; i++)
+				{
+					if(dcheckelement[i].checked)
+					{
+						plisttable.style.visibility = "hidden" ;
+						break;
+					}
+					else 
+						plisttable.style.visibility = "visible" ;
+				}
+
+				for(let i = 0; i < dcheckelement.length; i++)
+				{
+					if(dcheckelement[i].checked)
+					{
+						var s = 0;
+						var value = dcheckelement[i].value;
+						while(value.charAt(s) != "."){s++};
+						value = value.substring(0,s);
+						var classname = "d" + value;
+						var index = document.getElementsByClassName(classname);
+						for(let i = 0; i < index.length; i++)
+						{
+							var checkbox = index[i].querySelector(".dcheckbox");
+							if(checkbox.checked)
+								index[i].style.display = "";
+							else 
+								index[i].style.display = "none";
+						}
+					}
+					else 
+					{
+						var s = 0;
+						var value = dcheckelement[i].value;
+						while(value.charAt(s) != "."){s++};
+						value = value.substring(0,s);
+						var classname = "d" + value;
+						var index = document.getElementsByClassName(classname);
+						var a = 0;
+						for(let i = 0; i < index.length; i++)
+						{
+							var checkbox = index[i].querySelector(".dcheckbox");
+							if(checkbox.checked)
+							{
+								a = 1;
+								break;
+							}
+						}
+						if(a == 0)
+							for(let i = 0; i < index.length; i++)
+								index[i].style.display = "";
+					}
+				}
+
+				color();
+			}
+
+			function dtoggle(){
+				let pcheckarray = [];
+				let pcheckelement = document.getElementsByClassName("pcheckbox");
+				let dlisttable = document.getElementById("dlisttable");
+
+				for(let i= 0; i < pcheckelement.length; i++)
+				{
+					if(pcheckelement[i].checked)
+					{
+						dlisttable.style.visibility = "hidden" ;
+						break;
+					}
+					else
+						dlisttable.style.visibility = "visible" ;
+				}
+
+				for(let i = 0; i < pcheckelement.length; i++)
+				{
+					if(pcheckelement[i].checked)
+					{
+						var s = 0;
+						var value = pcheckelement[i].value;
+						while(value.charAt(s) != "."){s++};
+						value = value.substring(0,s);
+						var classname = "p" + value;
+						var index = document.getElementsByClassName(classname);
+						for(let i = 0; i < index.length; i++)
+						{
+							var checkbox = index[i].querySelector(".pcheckbox");
+							if(checkbox.checked)
+								index[i].style.display = "";
+							else 
+								index[i].style.display = "none";
+						}
+					}
+					else 
+					{
+						var s = 0;
+						var value = pcheckelement[i].value;
+						while(value.charAt(s) != "."){s++};
+						value = value.substring(0,s);
+						var classname = "p" + value;
+						var index = document.getElementsByClassName(classname);
+						var a = 0;
+						for(let i = 0; i < index.length; i++)
+						{
+							var checkbox = index[i].querySelector(".pcheckbox");
+							if(checkbox.checked)
+							{
+								a = 1;
+								break;
+							}
+						}
+						if(a == 0)
+							for(let i = 0; i < index.length; i++)
+								index[i].style.display = "";
+					}
+				}
+
+				color();
+			}
+
+			function drename(abc){
+				var length = abc.id.length;
+				var dname = abc.id.substring(7, length);
+				var s = 0;
+				var k = 0;
+				while(dname.charAt(s) != "_"){s++};
+				while(dname.charAt(k) != "."){k++};
+				var duser = dname.substring(0,s);
+				var dnamae = dname.substring(s+1, k);
+				var dextension = dname.substring(k+1, dname.length);
+
+				var henkan = "<input type = 'hidden', name = 'drenamebefore', value = " + dname + "><p id = 'drenamedialogtext'>Rename the file.</p><input type = 'text', name = 'drenameafter', value = " + dnamae + "><p id = 'extension'>." + dextension + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
+				document.getElementById("drename1").innerHTML = henkan;
+			}
+
+			function prename(abc){
+				var length = abc.id.length;
+				var pname = abc.id.substring(7, length);
+				var s = 0;
+				var k = 0;
+				while(pname.charAt(s) != "_"){s++};
+				while(pname.charAt(k) != "."){k++};
+				var puser = pname.substring(0,s);
+				var pnamae = pname.substring(s+1, k);
+				var pextension = pname.substring(k+1, pname.length);
+
+				
+
+				var henkan = "<input type = 'hidden', name = 'prenamebefore', value = " + pname + "><p id = 'prenamedialogtext'>Rename the file.</p><input type = 'text', name = 'prenameafter', value = " + pnamae + "><p id = 'extension'>." + pextension + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
+				document.getElementById("prename1").innerHTML = henkan;
+			}
+
+			function cancel(){
+				document.getElementById("drename1").innerHTML = "<input type = 'hidden', id = 'drename2'>"
+				document.getElementById("prename1").innerHTML = "<input type = 'hidden', id = 'prename2'>"
+				drename1.style.display = "hidden";
+				prename1.style.display = "hidden";
+			}
+
+			function color(){
+				var dcheckelement = document.getElementsByClassName("dcheckbox");
+				var pcheckelement = document.getElementsByClassName("pcheckbox");
+				var delement = document.getElementsByClassName("dtr");
+				var pelement = document.getElementsByClassName("ptr");
+
+				for(let i = 0; i < dcheckelement.length; i++)
+				{
+					if(dcheckelement[i].checked)
+						delement[i].style.backgroundColor = "darkgray";
+					else 
+						delement[i].style.backgroundColor = "white";
+				}
+				for(let i = 0; i < pcheckelement.length; i++) 
+				{
+					if(pcheckelement[i].checked)
+						pelement[i].style.backgroundColor = "darkgray";
+					else 
+						pelement[i].style.backgroundColor = "white";
+				}
+				
+
+
+			}
+
+
+
+	body
+		div
+			h2 DATABASE 
+		div.dlisttable(id="dlisttable")
+			form(action="/list", method="post") 
+				table
+					tr
+						th(colspan="4", class="listtable_title") Nucleotide 
+					tr
+						th.listtable_checkbox
+						th.listtable_namae 
+							p Item
+						th.listtabel_rename 
+						th.listtable_user
+							p User
+
+					- for(var i = 0; i < duser.length; i++)
+						- var dname = duser[i] + "_" + dnamae[i] + "." + dextension[i];
+						if i!=0 && duser[i]==duser[i-1] && dnamae[i]==dnamae[i-1]
+							- var did = "dsubmenu";
+						else 
+							-var did = "dmainmenu";
+
+						tr(class=[did, "d" + duser[i] +"_"+ dnamae[i], "dtr"])
+							td.listtable_checkbox
+								input.dcheckbox(type="checkbox", name="dcheckbox"  , id="dcheck" + dname , value=dname, onclick="ptoggle()")
+							td.listtable_namae
+								label.listlabel_namae(for="dcheck"+dname) #{dnamae[i]}
+							td.listtable_rename
+								button(type="button", id="dbutton" + dname, onclick="drename(this);") Rename 	
+							td.listtable_user
+								label(for="dcheck"+dname) #{duser[i]}
+							
+
+				input.submit(type="submit", name="dremove", value="Remove")
+			
+			button.listtable_selectall(onclick="dselectall()") Select All
+
+		div.plisttable(id="plisttable")
+			form(action="/list", method="post")
+				table
+					tr
+						th(colspan="4", class="listtable_title") Protein 
+					tr
+						th.listtable_checkbox
+						th.listtable_namae 
+							p Item
+						th.listtable_rename 
+						th.listtable_user
+							p User
+
+					- for(var i = 0; i < puser.length; i++)
+						- var pname = puser[i] + "_" + pnamae[i] + "." + pextension[i];
+						if(i != 0 && puser[i] == puser[i-1] && pnamae[i] == pnamae[i-1])
+							- var pid = "psubmenu"
+						else 
+							- var pid = "pmainmenu"
+
+						tr(class=[pid, "p" + puser[i] +"_"+ pnamae[i], "ptr"])
+							td.listtable_checkbox
+								input.pcheckbox(type="checkbox", name="pcheckbox"  , id="pcheck" + pname , value=pname, onclick="dtoggle()") 
+							td.listtable_namae
+								label(for="pcheck"+pname) #{pnamae[i]}   
+							td.listlabel_rename
+								button(type="button", id="pbutton" + pname, onclick="prename(this);") Rename
+							td.listtable_user
+								label(for="pcheck"+pname) #{puser[i]}
+				input.submit(type="submit", name="premove", value="Remove")
+			
+			button.listtable_selectall(onclick="pselectall()") Select All
+
+			form(name="drename1", id="drename1", action = "/list", method = "post")
+				input(type = "hidden", id = "drename2")
+
+			form(name="prename1", id="prename1", action = "/list", method = "post")
+				input(type = "hidden", id = "prename2")
+

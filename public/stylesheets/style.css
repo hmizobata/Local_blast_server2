@@ -1,0 +1,141 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+
+.dlisttable{
+	width: 48%;
+	float: left;
+}
+
+.plisttable{
+	width: 48%;
+	margin-left: auto;
+}
+
+.dlisttable tr td label {
+	display: block;
+	padding: 10px;
+}
+
+.plisttable tr td label {
+	display: block;
+	padding: 10px;
+}
+
+.dlisttable tr td input {
+	display: block;
+	padding: 10px;
+}
+
+.plisttable tr td input {
+	display: block;
+	padding: 10px;
+}
+
+.listtable_namae{
+	width: 75%;	
+}
+
+.listtable_user{
+	width: 25%;
+}
+
+.listtable_title{
+	font-size: x-large;
+}
+
+.listtable_remove button{
+	width: 100%;
+}
+
+.submit{
+	float: right;
+}
+
+table{
+	border-collapse:collapse;
+	margin:0 auto;
+}
+
+th{
+	color:#005ab3;
+}
+
+td{
+	border-bottom:1px dashed #999;
+}
+
+th,tr:last-child td{
+	border-bottom:2px solid #005ab3;
+}
+
+tr.dtr:hover{
+	background-color:darkgray !important;
+}
+
+tr.ptr:hover{
+	background-color:darkgray !important;
+}
+
+
+
+
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+.btn,
+a.btn,
+button.btn,
+input.submit {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #212529;
+  border-radius: 0.5rem;
+}
+
+/*背景*/
+button,
+input.submit {
+	border: 1px solid #ccc;
+	background: #f1e767;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
+	background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
+	background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
+	-webkit-box-shadow: inset 1px 1px 1px #fff;
+	box-shadow: inset 1px 1px 1px #fff;
+  }
+  
+button:hover,
+input.submit:hover {
+	background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
+	background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
+	background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+  }

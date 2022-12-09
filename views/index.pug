@@ -1,0 +1,17 @@
+extends layout
+
+block content
+
+ form(action="/" method="get")
+  div
+   p What greeting do you want to say?
+   input(name="say" id="say" value=data[0])
+  div
+   p Who do you want to say it to?
+   input(name="to" id="to" value=data[1])
+  div
+   button Send my greetings
+
+ div
+  p #{data[0]}
+  p #{data[1]}

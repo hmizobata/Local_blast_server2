@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    body 
+        form(enctype = "multipart/form-data", action = "/upload", method = "post")
+            p Upload FASTA files
+            input(type = "file", name = "file", accept = ".fasta, .fa, .fasta.gz, .fa.gz", multiple, required)
+            input(type="radio", name="uploadradio", value = "nucleotide", checked)
+            |   Nucleotide 
+            input(type="radio", name="uploadradio", value = "protein")
+            |   Protein 
+            input(type="text", name="uploaduser", pattern = "^[0-9A-Za-z]+$", required)
+            |   User
+            button(type="submit", name = "uploadsubmit") Upload
+        
