@@ -128,6 +128,11 @@ router.post("/", upload.any(), (req, res) =>{
          res.send("ERROR:   " + text.stderr.toString());
       }
 
+        var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
+        console.log("STDOUT:",restart.stdout.toString());
+        console.log("STDERR:",restart.stderr.toString());
+
+/*
     if(fs.existsSync(tmpplace + "restart.txt")){
     fs.unlinkSync(tmpplace + "restart.txt", (err) => {
       if(err) throw err;
@@ -136,7 +141,7 @@ router.post("/", upload.any(), (req, res) =>{
     fs.writeFile(tmpplace + "restart.txt", "", (err) => {
       if(err){throw err;}
     });
-  
+*/  
 
   res.redirect("upload");
 })

@@ -333,14 +333,18 @@ router.post('/', (req, res, next) => {
 	}
 
 
-    if(fs.existsSync(tmpplace + "restart.txt")){
-		fs.unlinkSync(tmpplace + "restart.txt", (err) => {
-		  if(err) throw err;
-		});
-		}
-		fs.writeFile(tmpplace + "restart.txt", "", (err) => {
-		  if(err){throw err;}
-		});
+	var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
+	console.log("STDOUT:",restart.stdout.toString());
+	console.log("STDERR:",restart.stderr.toString());
+
+    //if(fs.existsSync(tmpplace + "restart.txt")){
+	//	fs.unlinkSync(tmpplace + "restart.txt", (err) => {
+	//	  if(err) throw err;
+	//	});
+	//	}
+	//	fs.writeFile(tmpplace + "restart.txt", "", (err) => {
+	//	  if(err){throw err;}
+	//	});
 	
 
 	res.redirect("list");
