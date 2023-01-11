@@ -3,16 +3,35 @@ extends layout
 block content
 	head 
 		script.
+			//ファイル名を処理する関数。ユーザー名、ファイル名、拡張子名に分割してarrayを返す。
+			function filename_split(filename){
+				//アンダーバー、".fa"でファイル名をsplit。
+				var split_underbar = filename.split("_");
+				var split_fa = filename.split(".fa");
+
+				//ユーザー名はアンダーバーでsplitしたものの第1項、拡張子は".fa"でsplitしたものの最終項+"fa"。ファイル名は全体からそれらを削ったもの。
+				var username = split_underbar[0];
+				var extention = "fa" + split_fa[split_fa.length - 1];
+				var original_filename = filename.slice(username.length + 1).slice(0, -1-extention.length);
+
+				return [username, original_filename, extention];
+			}
+
+			//nucleotideチェックボックスの"Select All"ボタンの挙動
 			function dselectall(){
-				let dcheckarray = [];
+				//チェックボックスの要素取得
 				let dcheckelement = document.getElementsByClassName("dcheckbox");
-				
+
+				//チェックが入っているチェックボックスを配列に格納
+				let dcheckarray = [];
 				for(let i = 0; i < dcheckelement.length; i++)
 				{
 					if(dcheckelement[i].checked)
 						dcheckarray.push(dcheckelement[i].value);
 				}
 
+				//全てのチェックボックスにチェックが入っていた場合のみ、ボタンを押すとチェックがすべて外れる。
+				//それ以外の場合、全てのチェックボックスにチェックを付ける。
 				if(dcheckarray.length==dcheckelement.length)
 					for(let i = 0; i < dcheckelement.length; i++)
 						dcheckelement[i].checked = false;
@@ -20,20 +39,25 @@ block content
 					for(let i = 0; i < dcheckelement.length; i++)
 						dcheckelement[i].checked = true;
 				
+				//全選択した場合、proteinの表示を消す。
 				ptoggle();
 				}
 
-
+			//proteinチェックボックスの"Select All"ボタンの挙動
 			function pselectall(){
-				let pcheckarray = [];
+				//チェックボックスの要素取得
 				let pcheckelement = document.getElementsByClassName("pcheckbox");
-				
+
+				//チェックが入っているチェックボックスを配列に格納
+				let pcheckarray = [];
 				for(let i = 0; i < pcheckelement.length; i++)
 				{
 					if(pcheckelement[i].checked)
 						pcheckarray.push(pcheckelement[i].value);
 				}
 
+				//全てのチェックボックスにチェックが入っていた場合のみ、ボタンを押すとチェックがすべて外れる。
+				//それ以外の場合、全てのチェックボックスにチェックを付ける。
 				if(pcheckarray.length==pcheckelement.length)
 					for(let i = 0; i < pcheckelement.length; i++)
 						pcheckelement[i].checked = false;
@@ -41,15 +65,17 @@ block content
 					for(let i = 0; i < pcheckelement.length; i++)
 						pcheckelement[i].checked = true;
 				
+				//全選択した場合、nucleotideの表示を消す。
 				dtoggle();
 				}
 
-
+			//nucleotideチェックボックスにチェックが入ったとき、proteinリストを非表示にする。
 			function ptoggle(){
-				let dcheckarray = [];
+				//nucleotideチェックボックスとproteinリスト要素の取得
 				let dcheckelement = document.getElementsByClassName("dcheckbox");
 				let plisttable = document.getElementById("plisttable");
 
+				//nucleotideチェックボックスを一つ一つ確認して、一つでもチェックされていたらproteinリストを非表示にする。
 				for(let i= 0; i < dcheckelement.length; i++)
 				{
 					if(dcheckelement[i].checked)
@@ -60,59 +86,17 @@ block content
 					else 
 						plisttable.style.visibility = "visible" ;
 				}
-
-				for(let i = 0; i < dcheckelement.length; i++)
-				{
-					if(dcheckelement[i].checked)
-					{
-						var s = 0;
-						var value = dcheckelement[i].value;
-						while(value.charAt(s) != "."){s++};
-						value = value.substring(0,s);
-						var classname = "d" + value;
-						var index = document.getElementsByClassName(classname);
-						for(let i = 0; i < index.length; i++)
-						{
-							var checkbox = index[i].querySelector(".dcheckbox");
-							if(checkbox.checked)
-								index[i].style.display = "";
-							else 
-								index[i].style.display = "none";
-						}
-					}
-					else 
-					{
-						var s = 0;
-						var value = dcheckelement[i].value;
-						while(value.charAt(s) != "."){s++};
-						value = value.substring(0,s);
-						var classname = "d" + value;
-						var index = document.getElementsByClassName(classname);
-						var a = 0;
-						for(let i = 0; i < index.length; i++)
-						{
-							var checkbox = index[i].querySelector(".dcheckbox");
-							if(checkbox.checked)
-							{
-								a = 1;
-								break;
-							}
-						}
-						if(a == 0)
-							for(let i = 0; i < index.length; i++)
-								index[i].style.display = "";
-					}
-				}
-
 				color();
 			}
 
+			//proteinチェックボックスにチェックが入ったとき、nucleotideリストを非表示にする。
 			function dtoggle(){
-				let pcheckarray = [];
+				//proteinチェックボックスとproteinリスト要素の取得
 				let pcheckelement = document.getElementsByClassName("pcheckbox");
 				let dlisttable = document.getElementById("dlisttable");
 
-				for(let i= 0; i < pcheckelement.length; i++)
+				//proteinチェックボックスを一つ一つ確認して、一つでもチェックされていたらnucleotideリストを非表示にする。
+				for(let i = 0; i < pcheckelement.length; i++)
 				{
 					if(pcheckelement[i].checked)
 					{
@@ -122,98 +106,47 @@ block content
 					else
 						dlisttable.style.visibility = "visible" ;
 				}
-
-				for(let i = 0; i < pcheckelement.length; i++)
-				{
-					if(pcheckelement[i].checked)
-					{
-						var s = 0;
-						var value = pcheckelement[i].value;
-						while(value.charAt(s) != "."){s++};
-						value = value.substring(0,s);
-						var classname = "p" + value;
-						var index = document.getElementsByClassName(classname);
-						for(let i = 0; i < index.length; i++)
-						{
-							var checkbox = index[i].querySelector(".pcheckbox");
-							if(checkbox.checked)
-								index[i].style.display = "";
-							else 
-								index[i].style.display = "none";
-						}
-					}
-					else 
-					{
-						var s = 0;
-						var value = pcheckelement[i].value;
-						while(value.charAt(s) != "."){s++};
-						value = value.substring(0,s);
-						var classname = "p" + value;
-						var index = document.getElementsByClassName(classname);
-						var a = 0;
-						for(let i = 0; i < index.length; i++)
-						{
-							var checkbox = index[i].querySelector(".pcheckbox");
-							if(checkbox.checked)
-							{
-								a = 1;
-								break;
-							}
-						}
-						if(a == 0)
-							for(let i = 0; i < index.length; i++)
-								index[i].style.display = "";
-					}
-				}
-
 				color();
 			}
 
-			function drename(abc){
-				var length = abc.id.length;
-				var dname = abc.id.substring(7, length);
-				var s = 0;
-				var k = 0;
-				while(dname.charAt(s) != "_"){s++};
-				while(dname.charAt(k) != "."){k++};
-				var duser = dname.substring(0,s);
-				var dnamae = dname.substring(s+1, k);
-				var dextension = dname.substring(k+1, dname.length);
+			//nucleotideファイルのrenameボタンが押されたときの挙動
+			function drename(file){
+				//ファイル名をボタンIDから取得し、ユーザー名・ファイル名・拡張子名に分割
+				var dname = file.id.slice(7);
+				var file_info = filename_split(dname);
 
-				var henkan = "<input type = 'hidden', name = 'drenamebefore', value = " + dname + "><p id = 'drenamedialogtext'>Rename the file.</p><input type = 'text', name = 'drenameafter', value = " + dnamae + "><p id = 'extension'>." + dextension + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
+				//renameフォームの表示。
+				var henkan = "<input type = 'hidden', name = 'drenamebefore', value = " + dname + "><p id = 'drenamedialogtext'>Rename the file.</p><input type = 'text', name = 'drenameafter', value = " + file_info[1] + "><p id = 'extension'>." + file_info[2]  + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
 				document.getElementById("drename1").innerHTML = henkan;
 			}
 
-			function prename(abc){
-				var length = abc.id.length;
-				var pname = abc.id.substring(7, length);
-				var s = 0;
-				var k = 0;
-				while(pname.charAt(s) != "_"){s++};
-				while(pname.charAt(k) != "."){k++};
-				var puser = pname.substring(0,s);
-				var pnamae = pname.substring(s+1, k);
-				var pextension = pname.substring(k+1, pname.length);
+			//proteinファイルのrenameボタンが押されたときの挙動
+			function prename(file){
+				//ファイル名をボタンIDから取得し、ユーザー名・ファイル名・拡張子名に分割
+				var pname = file.id.slice(7);
+				var file_info = filename_split(pname);
 
-				
-
-				var henkan = "<input type = 'hidden', name = 'prenamebefore', value = " + pname + "><p id = 'prenamedialogtext'>Rename the file.</p><input type = 'text', name = 'prenameafter', value = " + pnamae + "><p id = 'extension'>." + pextension + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
+				//renameフォームの表示
+				var henkan = "<input type = 'hidden', name = 'prenamebefore', value = " + pname + "><p id = 'prenamedialogtext'>Rename the file.</p><input type = 'text', name = 'prenameafter', value = " + file_info[1] + "><p id = 'extension'>." + file_info[2] + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
 				document.getElementById("prename1").innerHTML = henkan;
 			}
 
+			//renameフォームのキャンセルボタンが押されたときの挙動
 			function cancel(){
-				document.getElementById("drename1").innerHTML = "<input type = 'hidden', id = 'drename2'>"
-				document.getElementById("prename1").innerHTML = "<input type = 'hidden', id = 'prename2'>"
-				drename1.style.display = "hidden";
-				prename1.style.display = "hidden";
+				//renameフォームのコードを非表示に書き換える。
+				document.getElementById("drename1").innerHTML = "<input type = 'hidden', id = 'drename1'>"
+				document.getElementById("prename1").innerHTML = "<input type = 'hidden', id = 'prename1'>"
 			}
 
+			//チェックされた要素の背景をグレーにする
 			function color(){
+				//nucleotide・proteinのチェックボックス・カラム全要素を取得
 				var dcheckelement = document.getElementsByClassName("dcheckbox");
 				var pcheckelement = document.getElementsByClassName("pcheckbox");
 				var delement = document.getElementsByClassName("dtr");
 				var pelement = document.getElementsByClassName("ptr");
 
+				//チェックが入っていれば、カラムの背景をグレーに変える
 				for(let i = 0; i < dcheckelement.length; i++)
 				{
 					if(dcheckelement[i].checked)
@@ -228,8 +161,9 @@ block content
 					else 
 						pelement[i].style.backgroundColor = "white";
 				}
-				
+			}
 
+			function to_upload(){
 
 			}
 
@@ -237,7 +171,13 @@ block content
 
 	body
 		div
-			h2 DATABASE 
+			h2 DATABASE
+			tr 	
+				form(action="/list", method="post")
+					td.to_upload  
+						button.to_upload(type="submit", name="upload") Upload Files
+					td.to_seqserver 
+						button.to_seqserver(type="button", onclick="window.open('http://suikou.fs.a.u-tokyo.ac.jp:4567/')") Sequence Server
 		div.dlisttable(id="dlisttable")
 			form(action="/list", method="post") 
 				table

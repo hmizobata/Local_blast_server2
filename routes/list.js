@@ -1,341 +1,289 @@
+//モジュールの読み込み
 var express = require('express');
 var router = express.Router();
-var ddata = {duser: [], dnamae: [], dextension: []};
-var ddata1 = [];
-var pdata = {puser: [], pnamae: [], pextension: []};
-var pdata1 = [];
 const childprocess = require("child_process");
+const fs = require('fs');
+const { file } = require('babel-types');
 
+//テスト用PATH
+const dbdna = "./opt/blast/db_dna/";
+const dbprotein = "./opt/blast/db_protein/";
+const tmpplace = "./tmp/";
+const makeblastdbplace = "./ncbi-blast-2.12.0+/bin/makeblastdb.exe";
 
-/*ディレクトリ変数
-const dbdna = "./opt/blast/db_dna";
-const dbprotein = "./opt/blast/db_protein";
-const tmpplace =;
-const makeblastdbplace = 
-*/
+//suikouサーバ用PATH
+// const dbdna = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_nucleotide/";
+// const dbprotein = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_protein/";
+// const seqserver = "/data2/sequenceserver/sequenceserver-2.0.0-db";
+// const tmpplace = seqserver + "/tmp/";
+// const makeblastdbplace = "/suikou/tool/ncbi-blast-2.13.0+/bin/makeblastdb";
 
-//サーバ用
-const dbdna = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_nucleotide/";
-const dbprotein = "/data2/sequenceserver/sequenceserver-2.0.0-db/db_protein/";
-const seqserver = "/data2/sequenceserver/sequenceserver-2.0.0-db";
-const tmpplace = seqserver + "/tmp/";
-const makeblastdbplace = "/suikou/tool/ncbi-blast-2.13.0+/bin/makeblastdb";
+//ファイル名を処理する関数。ユーザー名、ファイル名、拡張子名に分割してarrayを返す。
+function filename_split(filename){
+	//アンダーバー、".fa"でファイル名をsplit。
+	var split_underbar = filename.split("_");
+	var split_fa = filename.split(".fa");
 
+	//ユーザー名はアンダーバーでsplitしたものの第1項、拡張子は".fa"でsplitしたものの最終項+"fa"。ファイル名は全体からそれらを削ったもの。
+	var username = split_underbar[0];
+	var extention = "fa" + split_fa[split_fa.length - 1];
+	var original_filename = filename.slice(username.length + 1).slice(0, -1-extention.length);
 
-function dremove(){
-    let dcheckarray = [];
-    let dcheckelement = document.getElementsByName("dnacheckbox");
-
-    for(let i = 0; i < dcheckelement.length; i++)
-    {
-    if(dcheckelement[i].checked)
-        dcheckarray.push(dcheckelement[i].value.replace("dcheckbox",""));
-    }
- 
-
-    console.log(dcheckarray);
-
-    const fs = require("fs");
-
-
-    window.location.reload();
+	return [username, original_filename, extention];
 }
 
-function premove(){
-	let pcheckarray = [];
-	let pcheckelement = document.getElementsByName("proteincheckbox");
-	
-	for(let i = 0; i < pcheckelement.length; i++)
-	{
-		if(pcheckelement[i].checked)
-			pcheckarray.push(pcheckelement[i].value.replace("pcheckbox",""));
-	}
-
-	console.log(pcheckarray);
-
-	window.location.reload();
-}
-
-
-/* GET users listing. */
+//最初のページ表示。
 router.get('/', (req, res, next) => {
-	const fs1 = require('fs');
-	fs1.readdir(dbdna, (err, files) => {
+	
+	//データベース内のファイルを取得するときの変数。
+	var ddata = {duser: [], dnamae: [], dextension: []};
+	var ddata1 = [];
+	var pdata = {puser: [], pnamae: [], pextension: []};
+	var pdata1 = [];
+
+	//nucleotideファイルの読み込み。
+	fs.readdir(dbdna, (err, files) => {
+		
+		//ファイル一覧をユーザー名・ファイル名・拡張子名に分けてぶち込むリスト。
 		var duser = [];
 		var dnamae = [];
 		var dextension = [];
+
+		//DB内ファイルを一つずつ取得し、ddata1にぶちこむ。最後にsort。
 		files.forEach(file => {
 			ddata1.push(file);
 		});
 		ddata1.sort();
+
+		//ファイルをユーザー名・ファイル名・拡張子名に分割して配列にぶちこむ。
 		for(let i = 0;  i < ddata1.length; i++)
 		{
-			var s = 0;
-			var k = 0;
-			while(ddata1[i].charAt(s) != "_"){s++};
-			while(ddata1[i].charAt(k) != "."){k++};
-			var duser1 = ddata1[i].substring(0,s);
-			var dnamae1 = ddata1[i].substring(s+1, k);
-			var dextension1 = ddata1[i].substring(k+1, ddata1[i].length);
-			duser.push(duser1);
-			dnamae.push(dnamae1);
-			dextension.push(dextension1);
-			if(i > 0)
-			{
-				for(let k = 0; k < duser.length - 1; k++)
-				{
-					if(duser[duser.length-1] == duser[k] && dnamae[duser.length-1] == dnamae[k])
-					{
-						duser.pop();
-						dnamae.pop();
-						dextension.pop();
-						break;
-					}
-				}
+			//ファイル名からユーザー名、もとのファイル名、拡張子を取得。
+			file_info = filename_split(ddata1[i]);
+
+			//拡張子が.fasta,.faのものだけを集計する。
+			if(/^(fasta|fa)$/.test(file_info[2])){
+				duser.push(file_info[0]);
+				dnamae.push(file_info[1]);
+				dextension.push(file_info[2]);
 			}
 		}
-		console.log("c");
+
+		//配列を連想配列にぶちこむ。
 		ddata.duser=duser;
 		ddata.dnamae=dnamae;
 		ddata.dextension=dextension;
 	});
-	const fs2 = require('fs');
-	fs2.readdir(dbprotein, (err, files) => {
+
+	//proteinファイルの読み込み。
+	fs.readdir(dbprotein, (err, files) => {
+
+		//ファイル一覧をユーザー名・ファイル名・拡張子名に分けてぶち込むリスト。
 		var puser = [];
 		var pnamae = [];
 		var pextension = [];
+		
+		//DB内ファイルを一つずつ取得し、ddata1にぶちこむ。最後にsort。		
 		files.forEach(file => {
 			pdata1.push(file);
 		});
 		pdata1.sort();
+		
+		//ファイルをユーザー名・ファイル名・拡張子名に分割して配列にぶちこむ。
 		for(let i = 0;  i < pdata1.length; i++)
 		{
-			var s = 0;
-			var k = 0;
-			while(pdata1[i].charAt(s) != "_"){s++};
-			while(pdata1[i].charAt(k) != "."){k++};
-			var puser1 = pdata1[i].substring(0,s);
-			var pnamae1 = pdata1[i].substring(s+1, k);
-			var pextension1 = pdata1[i].substring(k+1, pdata1[i].length);
-			puser.push(puser1);
-			pnamae.push(pnamae1);
-			pextension.push(pextension1);
-			if(i > 0)
-			{
-				for(let k = 0; k < puser.length - 1; k++)
-				{
-					if(puser[puser.length-1] == puser[k] && pnamae[puser.length-1] == pnamae[k])
-					{
-						puser.pop();
-						pnamae.pop();
-						pextension.pop();
-						break;
-					}
-				}
-			}	
+			//ファイル名からユーザー名、もとのファイル名、拡張子を取得。
+			file_info = filename_split(pdata1[i]);
+
+			//拡張子が.fasta,.faのものだけを集計する。
+			if(/^(fasta|fa)$/.test(file_info[2])){
+				puser.push(file_info[0]);
+				pnamae.push(file_info[1]);
+				pextension.push(file_info[2]);
+			}
 		}
+		
+		//配列を連想配列にぶちこむ。
 		pdata.puser=puser;
 		pdata.pnamae=pnamae;
 		pdata.pextension=pextension;
 	});
 
-	ddata1 = [];
-	pdata1 = [];
-
+	//ユーザー名・ファイル名・拡張子名をnucleotide/protein別に格納したデータをviews/list.pugに渡す。
 	setTimeout(function(){
 		res.render("list", {duser: ddata.duser, dnamae: ddata.dnamae, dextension: ddata.dextension,
 			 puser: pdata.puser, pnamae: pdata.pnamae, pextension: pdata.pextension});
 	}, 50);
 });
 
+//renameやremoveなど、ページ内のボタンを押した場合の処理。
 router.post('/', (req, res, next) => {
 
-	const fs = require("fs");
-	if(typeof(req.body.drenamebefore) != "undefined")
+	//"Upload Files"ボタンが押されたとき、uploadページに遷移して終了。
+	if(typeof(req.body.upload) != "undefined"){
+		res.redirect("upload");
+		return;
+	}
+
+	if(typeof(req.body.drenamebefore) != "undefined")//nucleotideファイルのrename
 	{
+		//renameするファイル名を取得し、ユーザー名・(original)ファイル名・拡張子名に分割
 		var before = req.body.drenamebefore;
-		var s = 0;
-		var k = 0;
-		while(before.charAt(s) != "_"){s++};
-		while(before.charAt(k) != "."){k++};
-		var duser = before.substring(0,s);
-		var dnamae = before.substring(s+1, k);
-		var dextension = before.substring(k+1, before.length);
+		var before_info = filename_split(before);
 
 		var ddata2 =[];
-		console.log("a");
 
+		//renameの実行。ファイル一覧を取得し、対象のファイルのみに処理を実施。
 		fs.readdir(dbdna, (err, files) => {
+			
+			//DB内のファイル一覧を配列にぶちこみ、ソート。
 			files.forEach(file => {
 				ddata2.push(file);
 			});
 			ddata2.sort();
-			console.log("b");
+
+			//renameしたいファイルの拡張子がmakeblastdbによってできたものだった場合、消去する。
 			for(let i = 0;  i < ddata2.length; i++)
 			{
-				var s = 0;
-				var k = 0;
-				while(ddata2[i].charAt(s) != "_"){s++};
-				while(ddata2[i].charAt(k) != "."){k++};
-				var duser2 = ddata2[i].substring(0,s);
-				var dnamae2 = ddata2[i].substring(s+1, k);
-				var dextension2 = ddata2[i].substring(k+1, ddata2[i].length);
-				var after = duser2 + "_" + req.body.drenameafter + "." + dextension2;
-				console.log(dextension2);
+				//ファイル名からユーザー名・もとのファイル名・拡張子を取得。
+				var file_info = filename_split(ddata2[i]);
 
-				if(duser == duser2 && dnamae == dnamae2 && dextension2 != "fasta" && dextension2 != "fa")
+				//makeblastdbでできたファイルを削除(ユーザー名&もとのファイル名がrename対象で、かつ拡張子がfasta,faじゃなければ消去)。
+				if(file_info[0]==before_info[0] && file_info[1]==before_info[1] && /^(fasta|fa)$/.test(file_info[2])==false)
 				{
 					fs.unlinkSync(dbdna + ddata2[i]);
 				}				
 			}
+
+			//上の処理でmakeblastdb関連ファイルは消去できたので、renameの実行。
 			for(let i = 0;  i < ddata2.length; i++)
 			{
-				var s = 0;
-				var k = 0;
-				while(ddata2[i].charAt(s) != "_"){s++};
-				while(ddata2[i].charAt(k) != "."){k++};
-				var duser2 = ddata2[i].substring(0,s);
-				var dnamae2 = ddata2[i].substring(s+1, k);
-				var dextension2 = ddata2[i].substring(k+1, ddata2[i].length);
-				console.log(dextension2);
+				//ファイル名からユーザー名・もとのファイル名・拡張子を取得。
+				var file_info = filename_split(ddata2[i]);
 
-				if(duser == duser2 && dnamae == dnamae2 && (dextension2 == "fasta" || dextension2 == "fa"))
+				//ユーザー名・もとのファイル名・拡張子がrename対象のときに実行
+				if(file_info[0]==before_info[0] && file_info[1]==before_info[1] && /^(fasta|fa)$/.test(file_info[2]))
 				{
-					console.log("renamesync");
-					var after = duser2 + "_" + req.body.drenameafter + "." + dextension2;
+					//rename後ファイル名を設定し、rename実行。エラーとログを出力。
+					var after = file_info[0] + "_" + req.body.drenameafter + "." + file_info[2];
 					fs.rename(dbdna + ddata2[i], dbdna + after, err => {
 						if(err) throw err;
 						console.log(before + "-->" + after);
-						var makeblastfile = after;
-						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbdna + makeblastfile + " -dbtype nucl -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
-						console.log(text.stderr.toString());
-						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}			
+
+						//makeblastdbの実行。エラーは出力。
+						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbdna + after + " -dbtype nucl -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
+						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
 			}
 		});
 	}
-	else if(typeof(req.body.prenamebefore) != "undefined")
+	else if(typeof(req.body.prenamebefore) != "undefined")//proteinファイルのrename。
 	{
+		//renameするファイル名を取得し、ユーザー名・(original)ファイル名・拡張子名に分割
 		var before = req.body.prenamebefore;
-		var s = 0;
-		var k = 0;
-		while(before.charAt(s) != "_"){s++};
-		while(before.charAt(k) != "."){k++};
-		var puser = before.substring(0,s);
-		var pnamae = before.substring(s+1, k);
-		var pextension = before.substring(k+1, before.length);
+		var before_info = filename_split(before);
 
 		var pdata2 =[];
+
+		//renameの実行。ファイル一覧を取得し、対象のファイルのみに処理を実施。
 		fs.readdir(dbprotein, (err, files) => {
+			
+			//DB内のファイル一覧を配列にぶちこみ、ソート。
 			files.forEach(file => {
 				pdata2.push(file);
 			});
 			pdata2.sort();
-			console.log("b");
+
+			//renameしたいファイルの拡張子がmakeblastdbによってできたものだった場合、消去する。
 			for(let i = 0;  i < pdata2.length; i++)
 			{
-				var s = 0;
-				var k = 0;
-				while(pdata2[i].charAt(s) != "_"){s++};
-				while(pdata2[i].charAt(k) != "."){k++};
-				var puser2 = pdata2[i].substring(0,s);
-				var pnamae2 = pdata2[i].substring(s+1, k);
-				var pextension2 = pdata2[i].substring(k+1, pdata2[i].length);
-				var after = puser2 + "_" + req.body.prenameafter + "." + pextension2;
-				console.log(pextension2);
+				//ファイル名からユーザー名・もとのファイル名・拡張子を取得。
+				var file_info = filename_split(pdata2[i]);
 
-				if(puser == puser2 && pnamae == pnamae2 && pextension2 != "fasta" && pextension2 != "fa")
+				//makeblastdbでできたファイルを削除(ユーザー名&もとのファイル名がrename対象で、かつ拡張子がfasta,faじゃなければ消去)。
+				if(file_info[0]==before_info[0] && file_info[1]==before_info[1] && /^(fasta|fa)$/.test(file_info[2])==false)
 				{
 					fs.unlinkSync(dbprotein + pdata2[i]);
 				}				
 			}
+
+			//上の処理でmakeblastdb関連ファイルは消去できたので、renameの実行。
 			for(let i = 0;  i < pdata2.length; i++)
 			{
-				var s = 0;
-				var k = 0;
-				while(pdata2[i].charAt(s) != "_"){s++};
-				while(pdata2[i].charAt(k) != "."){k++};
-				var puser2 = pdata2[i].substring(0,s);
-				var pnamae2 = pdata2[i].substring(s+1, k);
-				var pextension2 = pdata2[i].substring(k+1, pdata2[i].length);
-				console.log(pextension2);
+				//ファイル名からユーザー名・もとのファイル名・拡張子を取得。
+				var file_info = filename_split(pdata2[i]);
 
-				if(puser == puser2 && pnamae == pnamae2 && (pextension2 == "fasta" || pextension2 == "fa"))
+				//ユーザー名・もとのファイル名・拡張子がrename対象のときに実行
+				if(file_info[0]==before_info[0] && file_info[1]==before_info[1] && /^(fasta|fa)$/.test(file_info[2]))
 				{
-					console.log("renamesync");
-					var after = puser2 + "_" + req.body.prenameafter + "." + pextension2;
+					//rename後ファイル名を設定し、rename実行。エラーとログを出力。
+					var after = file_info[0] + "_" + req.body.prenameafter + "." + file_info[2];
 					fs.rename(dbprotein + pdata2[i], dbprotein + after, err => {
 						if(err) throw err;
 						console.log(before + "-->" + after);
-						var makeblastfile = after;
-						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbprotein + makeblastfile + " -dbtype prot -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
-						console.log(text.stderr.toString());
-						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}			
+
+						//makeblastdbの実行。エラーは出力。
+						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbprotein + after + " -dbtype prot -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
+						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
 			}
 		});
 	}
-	else if(typeof(req.body.dcheckbox) != "undefined" && typeof(req.body.drename) == "undefined")
+	else if(typeof(req.body.dcheckbox) != "undefined" && typeof(req.body.drename) == "undefined")//nucleotideデータの削除
 	{
-		var before = req.body.dcheckbox;
-		var s = 0;
-		var k = 0;
-		while(before.charAt(s) != "_"){s++};
-		while(before.charAt(k) != "."){k++};
-		var duser = before.substring(0,s);
-		var dnamae = before.substring(s+1, k);
-		var ddata3 = [];
+		//リストの定義
+		var user = [];
+		var filename = [];
 
+		//チェックが入っているチェックボックスのファイル名を分割し、ユーザー名・ファイル名を取得。
+		req.body.dcheckbox.forEach(file => {
+			var file_info = filename_split(file);
+			user.push(file_info[0]);
+			filename.push(file_info[1]);
+		})
+
+		//DB内ファイルを一つずつ確認し、ユーザー名・ファイル名が削除対象と一致すれば削除。
 		fs.readdir(dbdna, (err, files) => {
 			files.forEach(file => {
-				ddata3.push(file);
+				var file_info = filename_split(file);
+				for(let i = 0; i < user.length; i++){
+					if(file_info[0] == user[i] && file_info[1] == filename[i])
+						fs.unlinkSync(dbdna + file);
+				}
 			});
-			console.log(ddata3);
-			for(let i = 0; i < ddata3.length; i++)
-			{
-				let x = 0;
-				let y = 0;
-				while(ddata3[i].charAt(x) != "_"){x++};
-				while(ddata3[i].charAt(y) != "."){y++};
-				if(duser == ddata3[i].substring(0,x) && dnamae == ddata3[i].substring(x+1,y))
-					fs.unlinkSync(dbdna + ddata3[i]);
-			}
 		});
 	}
-	else if(typeof(req.body.pcheckbox) != "undefined" && typeof(req.body.prename == "undefined"))
+	else if(typeof(req.body.pcheckbox) != "undefined" && typeof(req.body.prename == "undefined"))//proteinデータの削除
 	{
-		var before = req.body.pcheckbox;
-		var s = 0;
-		var k = 0;
-		while(before.charAt(s) != "_"){s++};
-		while(before.charAt(k) != "."){k++};
-		var puser = before.substring(0,s);
-		var pnamae = before.substring(s+1, k);
-		var pdata3 = [];
+		//リストの定義
+		var user = [];
+		var filename = [];
 
+		//チェックが入っているチェックボックスのファイル名を分割し、ユーザー名・ファイル名を取得。
+		req.body.pcheckbox.forEach(file => {
+			var file_info = filename_split(file);
+			user.push(file_info[0]);
+			filename.push(file_info[1]);
+		})
+
+		//DB内ファイルを一つずつ確認し、ユーザー名・ファイル名が削除対象と一致すれば削除。
 		fs.readdir(dbprotein, (err, files) => {
 			files.forEach(file => {
-				pdata3.push(file);
+				var file_info = filename_split(file);
+				for(let i = 0; i < user.length; i++){
+					if(file_info[0] == user[i] && file_info[1] == filename[i])
+						fs.unlinkSync(dbprotein + file);
+				}
 			});
-			console.log(pdata3);
-			for(let i = 0; i < pdata3.length; i++)
-			{
-				let x = 0;
-				let y = 0;
-				while(pdata3[i].charAt(x) != "_"){x++};
-				while(pdata3[i].charAt(y) != "."){y++};
-				if(puser == pdata3[i].substring(0,x) && pnamae == pdata3[i].substring(x+1,y))
-					fs.unlinkSync(dbprotein + pdata3[i]);
-			}
 		});
 	}
 
 
-	var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
-	console.log("STDOUT:",restart.stdout.toString());
-	console.log("STDERR:",restart.stderr.toString());
+	// var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
+	// console.log("STDOUT:",restart.stdout.toString());
+	// console.log("STDERR:",restart.stderr.toString());
 
     //if(fs.existsSync(tmpplace + "restart.txt")){
 	//	fs.unlinkSync(tmpplace + "restart.txt", (err) => {
@@ -346,7 +294,7 @@ router.post('/', (req, res, next) => {
 	//	  if(err){throw err;}
 	//	});
 	
-
+	//listページのリロード
 	res.redirect("list");
 })
 

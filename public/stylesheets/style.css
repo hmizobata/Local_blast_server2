@@ -79,9 +79,17 @@ tr.ptr:hover{
 	background-color:darkgray !important;
 }
 
+td.to_upload{
+	width: 10%;
+}
 
+td.to_list{
+	width: 10%;
+}
 
-
+td.to_seqserver{
+	width: 10%;
+}
 
 *,
 *:before,
