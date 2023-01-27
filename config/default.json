@@ -1,0 +1,19 @@
+{
+  "filetypes": {
+      "permitted_filetypes_upload":"[.](fasta|fa|fsa|fna|aa)([.]gz|)$",
+      "permitted_filetypes_list":"[.](fasta|fa|fsa|fna|aa)($|[.])",
+      "permitted_extensions":"^(fasta|fa|fsa|fna|aa)$"
+  },
+  "path": {
+      "makeblastdbplace":"./ncbi-blast-2.12.0+/bin/makeblastdb.exe",
+      "dbplace":"./opt/blast/",
+      "dbdna":"./opt/blast/db_dna/",
+      "dbprotein":"./opt/blast/db_protein/",
+      "tmpplace":"./tmp/",
+      "uploadplace":"./uploads/",
+      "errorplace":"./error/"
+  },
+  "url": {
+      "seqserver":"http://suikou.fs.a.u-tokyo.ac.jp:4567/"
+  }
+}

@@ -5,16 +5,16 @@ block content
     div
         h2 Upload FASTA Files 
         tr
-            form(action="/upload", method="post")
-                td.to_list 
+            form(action = "/list", method = "get")
+                td.to_list
                     button(type="submit", name="list") DATABASE  
                 td.to_seqserver 
-                    button.to_seqserver(type="button", onclick="window.open('http://suikou.fs.a.u-tokyo.ac.jp:4567/')") Sequence Server
+                    button.to_seqserver(type="button", onclick="window.open('" + seqserver + "')") Sequence Server
     div 
         form(enctype = "multipart/form-data", action = "/upload", method = "post")
             p
             div  
-                input(type = "file", name = "file", accept = ".fasta, .fa, .fasta.gz, .fa.gz", multiple, required)
+                input(type = "file", name = "file", accept = ".fasta, .fa, .fasta.gz, .fa.gz, .fna, .fna.gz, .fsa, .fsa.gz, .aa, .aa.gz", multiple, required)
                 input(type="radio", name="uploadradio", value = "nucleotide", checked)
                 |   Nucleotide 
                 input(type="radio", name="uploadradio", value = "protein")

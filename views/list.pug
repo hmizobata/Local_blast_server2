@@ -5,16 +5,38 @@ block content
 		script.
 			//ファイル名を処理する関数。ユーザー名、ファイル名、拡張子名に分割してarrayを返す。
 			function filename_split(filename){
-				//アンダーバー、".fa"でファイル名をsplit。
+				//許容するファイルタイプ・拡張子
+				const permitted_filetypes = /[.](fasta|fa|fsa|fna|aa)($|[.])/;
+				const permitted_extensions = /^(fasta|fa|fsa|fna|aa)$/;
+
+				//アンダーバーでファイル名をsplit。
 				var split_underbar = filename.split("_");
-				var split_fa = filename.split(".fa");
 
-				//ユーザー名はアンダーバーでsplitしたものの第1項、拡張子は".fa"でsplitしたものの最終項+"fa"。ファイル名は全体からそれらを削ったもの。
+				//ユーザー名はアンダーバーでsplitしたものの第1項。もとのファイル名・拡張子は置換して獲得。
 				var username = split_underbar[0];
-				var extention = "fa" + split_fa[split_fa.length - 1];
-				var original_filename = filename.slice(username.length + 1).slice(0, -1-extention.length);
 
-				return [username, original_filename, extention];
+				//ファイル名からユーザー名を除去。
+				var original_filename = filename.replace(username + "_", "");
+
+				//"."でスプリット
+				var split_dot = original_filename.split(".");
+				var extension = "";
+
+				//"."でスプリットした最終項から順に見ていき、fasta等に一致したらそれ以降を拡張子とする。
+				for(let i = split_dot.length - 1; i > -1; i--){
+					if(i == split_dot.length - 1)
+						extension = split_dot[i];
+					else
+						extension = split_dot[i] + "." + extension;
+		
+					//拡張子を除去した値がoriginal_filenameである。各値が確定したらループを止める。
+					if(permitted_extensions.test(split_dot[i])){
+						var remExtension = new RegExp("." + extension + "$");
+						original_filename = original_filename.replace(remExtension,"");
+						break;
+					}
+				}
+				return [username, original_filename, extension];
 			}
 
 			//nucleotideチェックボックスの"Select All"ボタンの挙動
@@ -110,10 +132,10 @@ block content
 			}
 
 			//nucleotideファイルのrenameボタンが押されたときの挙動
-			function drename(file){
+			function drename(dname){
 				//ファイル名をボタンIDから取得し、ユーザー名・ファイル名・拡張子名に分割
-				var dname = file.id.slice(7);
 				var file_info = filename_split(dname);
+
 
 				//renameフォームの表示。
 				var henkan = "<input type = 'hidden', name = 'drenamebefore', value = " + dname + "><p id = 'drenamedialogtext'>Rename the file.</p><input type = 'text', name = 'drenameafter', value = " + file_info[1] + "><p id = 'extension'>." + file_info[2]  + "<button type = 'submit', id = 'renamesubmit'>Rename</button><button type = 'button', id = 'renamecancel', onclick = 'cancel()'>Cancel</button>"
@@ -121,9 +143,8 @@ block content
 			}
 
 			//proteinファイルのrenameボタンが押されたときの挙動
-			function prename(file){
+			function prename(pname){
 				//ファイル名をボタンIDから取得し、ユーザー名・ファイル名・拡張子名に分割
-				var pname = file.id.slice(7);
 				var file_info = filename_split(pname);
 
 				//renameフォームの表示
@@ -162,10 +183,7 @@ block content
 						pelement[i].style.backgroundColor = "white";
 				}
 			}
-
-			function to_upload(){
-
-			}
+			function to_upload(){}
 
 
 
@@ -173,11 +191,11 @@ block content
 		div
 			h2 DATABASE
 			tr 	
-				form(action="/list", method="post")
+				form(action="/upload", method="get")
 					td.to_upload  
 						button.to_upload(type="submit", name="upload") Upload Files
 					td.to_seqserver 
-						button.to_seqserver(type="button", onclick="window.open('http://suikou.fs.a.u-tokyo.ac.jp:4567/')") Sequence Server
+						button.to_seqserver(type="button", onclick="window.open('" + seqserver + "')") Sequence Server
 		div.dlisttable(id="dlisttable")
 			form(action="/list", method="post") 
 				table
@@ -204,7 +222,7 @@ block content
 							td.listtable_namae
 								label.listlabel_namae(for="dcheck"+dname) #{dnamae[i]}
 							td.listtable_rename
-								button(type="button", id="dbutton" + dname, onclick="drename(this);") Rename 	
+								button(type="button", id="dbutton" + dname, onclick="drename('" + dname + "');") Rename 	
 							td.listtable_user
 								label(for="dcheck"+dname) #{duser[i]}
 							
@@ -239,7 +257,7 @@ block content
 							td.listtable_namae
 								label(for="pcheck"+pname) #{pnamae[i]}   
 							td.listlabel_rename
-								button(type="button", id="pbutton" + pname, onclick="prename(this);") Rename
+								button(type="button", id="pbutton" + pname, onclick="prename('" + pname + "');") Rename
 							td.listtable_user
 								label(for="pcheck"+pname) #{puser[i]}
 				input.submit(type="submit", name="premove", value="Remove")
