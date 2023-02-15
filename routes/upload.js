@@ -147,7 +147,7 @@ router.post("/", upload.any(), (req, res) =>{
   }
 
    //makeblastdbの実行。エラーが出たら該当ファイルを削除し、エラー出力。
-   var text = childprocess.spawnSync("bash makeblastdb.sh " + dir2 + " " + blast + " " + user + "_" + file, {shell: true}, );
+   var text = childprocess.spawnSync("bash makeblastdb.sh " + dir2 + " " + blast + " " + user + "_" + file + " -parse_seqids", {shell: true}, );
    if(text.stderr.toString()){
 	//削除対象ファイルのユーザー名・ファイル名・拡張子名を取得
  	var removefile_info = filename_split(user + "_" + file);
@@ -165,6 +165,7 @@ router.post("/", upload.any(), (req, res) =>{
 res.send("ERROR:   " + text.stderr.toString());
 };
 
+  childprocess.spawn("kill `ps -a|awk '{if($4==\"bundle\")print $1;}'`; bash run_seqserver.sh", {shell: true}, );
   res.redirect("upload");
 })
 

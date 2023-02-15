@@ -1,0 +1,186 @@
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.njs' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list [32m200 [0m369.777 ms - 9844[0m
+[0mGET /stylesheets/style.css [32m200 [0m2.650 ms - 2304[0m
+[0mGET /favicon.ico [33m404 [0m7.821 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m24.278 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.589 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m6.783 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.njs' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m130.220 ms - 9844[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.317 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.564 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m9.559 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.308 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m3.925 ms - 1212[0m
+[0mPOST /upload [36m302 [0m1050.601 ms - 56[0m
+[0mGET /upload [32m200 [0m39.789 ms - 1022[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.402 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m8.314 ms - 1212[0m
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[0mGET /upload [36m304 [0m275.227 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m1.219 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m9.251 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.njs' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.ndb' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.nhr' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.nin' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.not' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.nsq' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.ntf' ]
+[ 'smith', 'HumpbackDloopFASTA', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m207.448 ms - 10493[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.576 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m5.421 ms - 1212[0m
+[0mPOST /list [36m302 [0m16.486 ms - 52[0m
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/local_blast_server/Local_blast_server2/node_modules/express/lib/response.js:767:10)
+    at ServerResponse.send (/local_blast_server/Local_blast_server2/node_modules/express/lib/response.js:170:12)
+    at done (/local_blast_server/Local_blast_server2/node_modules/express/lib/response.js:1004:10)
+    at Object.exports.renderFile (/local_blast_server/Local_blast_server2/node_modules/pug/lib/index.js:412:12)
+    at View.exports.__express [as engine] (/local_blast_server/Local_blast_server2/node_modules/pug/lib/index.js:455:11)
+    at View.render (/local_blast_server/Local_blast_server2/node_modules/express/lib/view.js:135:8)
+    at tryRender (/local_blast_server/Local_blast_server2/node_modules/express/lib/application.js:640:10)
+    at Function.render (/local_blast_server/Local_blast_server2/node_modules/express/lib/application.js:592:3)
+    at ServerResponse.render (/local_blast_server/Local_blast_server2/node_modules/express/lib/response.js:1008:7)
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.njs' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list [32m200 [0m142.802 ms - 9844[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.798 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m13.248 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m31.843 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.462 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m9.418 ms - 1212[0m
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[0mGET /upload [32m200 [0m229.524 ms - 1022[0m
+[0mGET /stylesheets/style.css [36m304 [0m1.486 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m9.317 ms - 1212[0m
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.ndb' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.nhr' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.nin' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.not' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.nsq' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.ntf' ]
+[ 'abhj', 'HumpbackDloopFASTA', 'fasta.nto' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.ndb' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.nhr' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.nin' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.not' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.nsq' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.ntf' ]
+[ 'korena', 'HumpbackDloopFASTA', 'fasta.nto' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.njs' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m192.384 ms - 11142[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.564 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m6.928 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m28.561 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.372 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.774 ms - 1212[0m
+[0mPOST /upload [36m302 [0m196013.025 ms - 56[0m
+[0mGET /upload [32m200 [0m34.730 ms - 1022[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.486 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m11.297 ms - 1212[0m
+[0mGET /upload [36m304 [0m23.859 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.327 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m10.849 ms - 1212[0m
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+/local_blast_server/Local_blast_server2/routes/list.js:322
+	childprocess.spawnSync("kill `ps -a|awk '{if($4=="bundle")print $1;}'`; bash run_seqserver.sh", {shell: true}, );
+	                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at Module._compile (internal/modules/cjs/loader.js:723:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/local_blast_server/Local_blast_server2/app.js:9:18)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! express-locallibrary-tutorial@0.0.0 start: `node ./bin/www`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the express-locallibrary-tutorial@0.0.0 start script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2023-02-15T07_48_04_194Z-debug.log

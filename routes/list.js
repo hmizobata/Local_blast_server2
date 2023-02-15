@@ -193,7 +193,7 @@ router.post('/', (req, res, next) => {
 						console.log(before + "-->" + after);
 
 						//makeblastdbの実行。エラーは出力。
-						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbdna +" nucl "+ after, {shell: true}, );
+						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbdna +" nucl "+ after + " -parse_seqids", {shell: true}, );
 						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
@@ -247,7 +247,7 @@ router.post('/', (req, res, next) => {
 						console.log(before + "-->" + after);
 
 						//makeblastdbの実行。エラーは出力。
-						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbprotein + " prot "  + after, {shell: true}, );
+						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbprotein + " prot "  + after + " -parse_seqids", {shell: true}, );
 						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
@@ -319,6 +319,7 @@ router.post('/', (req, res, next) => {
 		res.redirect("list");
 	}
 
+	childprocess.spawn("kill `ps -a|awk '{if($4==\"bundle\")print $1;}'`; bash run_seqserver.sh", {shell: true}, );
 	res.redirect("list");
 })
 
