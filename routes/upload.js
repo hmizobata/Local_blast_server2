@@ -26,15 +26,6 @@ const uploadplace = conf.path.uploadplace;
 const errorplace = conf.path.errorplace;
 const url_seqserver = conf.url.seqserver;
 
-// //suikouサーバー用PATH
-// const makeblastdbplace = "/suikou/tool/ncbi-blast-2.13.0+/bin/makeblastdb";
-// const seqserver = "/data2/sequenceserver/sequenceserver-2.0.0-db";
-// const dbplace = seqserver;
-// const tmpplace = seqserver + "/tmp/";
-// const dbdna = dbplace + "/db_nucleotide/";
-// const dbprotein = dbplace + "/db_protein/";
-// const uploadplace = seqserver + "/uploads/";
-
 //configファイルから変更する変数↑
 
 //ファイル名を処理する関数。ユーザー名、ファイル名、拡張子名に分割してarrayを返す。
@@ -81,17 +72,13 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage: storage});
 
-
-
 //最初のページ表示。テンプレート(upload.pug)を読み込む。
 router.get('/', function(req, res, next) {
   res.render("upload", {seqserver: url_seqserver});
 });
 
-
-
 //「Upload」ボタンが押されたときの処理
-router.post("/", upload.any(), (req, res) =>{  
+router.post("/", upload.any(), (req, res) =>{
   //nucleotide/protein情報、ユーザー名、ファイル名の取得
   var radio = req.body.uploadradio;
   var user = req.body.uploaduser;
@@ -100,12 +87,16 @@ router.post("/", upload.any(), (req, res) =>{
   //ファイルがちゃんとfasta,fa,fsa,fna,aaになっているか、スペースを含まないか確認。不適切なファイル名の場合エラーを出力する。
   var isFileFasta = file.match(permitted_filetypes);
   var includeSpaces = file.match(/ /);
-  
-  if(isFileFasta == null)
-    return res.send("Error: This file is inappropriate for the database. <br> 1.Available extensions are '.fasta, .fa, .fasta.gz, .fa.gz, .fsa, .fsa.gz, .fna, .fna.gz, .aa, .aa.gz'.");
 
-  if(includeSpaces != null)
-    return res.send("Error: This file is inappropriate for the database. <br>Spaces are not available for the file name.");
+  if(isFileFasta == null){
+	fs.unlinkSync(uploadplace + file);
+	return res.send("Error: This file is inappropriate for the database. <br> 1.Available extensions are '.fasta, .fa, .fasta.gz, .fa.gz, .fsa, .fsa.gz, .fna, .fna.gz, .aa, .aa.gz'.");
+  }
+
+  if(includeSpaces != null){
+	fs.unlinkSync(uploadplace + file);
+	return res.send("Error: This file is inappropriate for the database. <br>Spaces are not available for the file name.");
+  }
 
 
   //ファイルアップロード先、makeblastdb時のdbtypeの指定。チェックボックスのnucleotide/proteinの値から判定。
@@ -131,12 +122,15 @@ router.post("/", upload.any(), (req, res) =>{
     var filename = file.replace(permitted_filetypes,"");
         
     //「ユーザー名」・「拡張子を除去したファイル名」が一致する場合、エラーを出力。
-    if(user==exists_info[0] && filename==exists_info[1])
-      return res.send("Error: A file with the same name already exists.");
+    if(user==exists_info[0] && filename==exists_info[1]){
+	fs.unlinkSync(uploadplace+file);
+	return res.send("Error: A file with the same name already exists.");
+    }
   }
 
   //uploadフォルダにアップロードしておいたファイルを、DBディレクトリに移動する。
-  fs.renameSync(uplodir + file, dir + user + "_" + file);
+  fs.copyFileSync(uplodir + file, dir + user + "_" + file);
+  fs.unlinkSync(uplodir+file);
 
   //アップロードファイルがgz形式の場合、解凍する。
   if(/[.]gz$/.test(file)){
@@ -152,28 +146,24 @@ router.post("/", upload.any(), (req, res) =>{
     });
   }
 
-  // //makeblastdbの実行。エラーが出たら該当ファイルを削除し、エラー出力。
-  // var text = childprocess.spawnSync(makeblastdbplace + " -in " + dir2 + user + "_" + file + " -dbtype " + blast + " -hash_index -parse_seqids -title " + user + "_" + file, {shell: true}, );
-  // if(text.stderr.toString()){
-  //   //削除対象ファイルのユーザー名・ファイル名・拡張子名を取得
-  //   var removefile_info = filename_split(user + "_" + file);
+   //makeblastdbの実行。エラーが出たら該当ファイルを削除し、エラー出力。
+   var text = childprocess.spawnSync("bash makeblastdb.sh " + dir2 + " " + blast + " " + user + "_" + file, {shell: true}, );
+   if(text.stderr.toString()){
+	//削除対象ファイルのユーザー名・ファイル名・拡張子名を取得
+ 	var removefile_info = filename_split(user + "_" + file);
 
-  //   //ディレクトリ内を検索し、ユーザー名・ファイル名が一致するものをerrorディレクトリに移動。
-  //   fs.readdir(dir2, (err, files) => {
-  //     files.forEach(file => {
-  //       var eachfile_info = filename_split(file);
-  //       if(removefile_info[0] == eachfile_info[0] && removefile_info[1] == eachfile_info[1])
-  //         fs.renameSync(dir2 + file, errorplace + file);
-  //     })
-  //   });
+  	//ディレクトリ内を検索し、ユーザー名・ファイル名が一致するものを削除。
+  	fs.readdir(dir2, (err, files) => {
+  	files.forEach(file => {
+  		var eachfile_info = filename_split(file);
+  		if(removefile_info[0] == eachfile_info[0] && removefile_info[1] == eachfile_info[1])
+  		fs.unlinkSync(dir2+file);
+  	})
+  });
 
-  //   //エラーメッセージの出力
-  //   res.send("ERROR:   " + text.stderr.toString());
-  // };
-
-        // var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
-        // console.log("STDOUT:",restart.stdout.toString());
-        // console.log("STDERR:",restart.stderr.toString());
+//エラーメッセージの出力
+res.send("ERROR:   " + text.stderr.toString());
+};
 
   res.redirect("upload");
 })

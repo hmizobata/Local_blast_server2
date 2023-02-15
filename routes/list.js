@@ -193,7 +193,7 @@ router.post('/', (req, res, next) => {
 						console.log(before + "-->" + after);
 
 						//makeblastdbの実行。エラーは出力。
-						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbdna + after + " -dbtype nucl -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
+						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbdna +" nucl "+ after, {shell: true}, );
 						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
@@ -247,7 +247,7 @@ router.post('/', (req, res, next) => {
 						console.log(before + "-->" + after);
 
 						//makeblastdbの実行。エラーは出力。
-						var text = childprocess.spawnSync(makeblastdbplace + " -in " + dbprotein + after + " -dbtype prot -hash_index -parse_seqids -title " + makeblastfile, {shell: true}, );
+						var text = childprocess.spawnSync("bash makeblastdb.sh " + dbprotein + " prot "  + after, {shell: true}, );
 						if(text.stderr.toString()){res.send("ERROR:   " + text.stderr.toString());}	
 					});
 				}
@@ -319,21 +319,6 @@ router.post('/', (req, res, next) => {
 		res.redirect("list");
 	}
 
-
-	// var restart = childprocess.spawnSync('docker restart seqserv2', {shell: true}, );
-	// console.log("STDOUT:",restart.stdout.toString());
-	// console.log("STDERR:",restart.stderr.toString());
-
-    //if(fs.existsSync(tmpplace + "restart.txt")){
-	//	fs.unlinkSync(tmpplace + "restart.txt", (err) => {
-	//	  if(err) throw err;
-	//	});
-	//	}
-	//	fs.writeFile(tmpplace + "restart.txt", "", (err) => {
-	//	  if(err){throw err;}
-	//	});
-	
-	//listページのリロード
 	res.redirect("list");
 })
 
