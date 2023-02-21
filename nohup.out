@@ -184,3 +184,157 @@ npm ERR! This is probably not a problem with npm. There is likely additional log
 
 npm ERR! A complete log of this run can be found in:
 npm ERR!     /root/.npm/_logs/2023-02-15T07_48_04_194Z-debug.log
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m438.215 ms - 9835[0m
+[0mGET /stylesheets/style.css [36m304 [0m1.635 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m8.269 ms - 1212[0m
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [36m304 [0m471.536 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m1.242 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m12.916 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [36m304 [0m178.333 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.514 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.844 ms - 1212[0m
+npm WARN npm npm does not support Node.js v10.24.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> express-locallibrary-tutorial@0.0.0 start /local_blast_server/Local_blast_server2
+> node ./bin/www
+
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m467.446 ms - 9138[0m
+[0mGET /stylesheets/style.css [36m304 [0m1.473 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m9.924 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [36m304 [0m217.374 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.450 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m6.529 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m20.996 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.527 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m6.513 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[0mGET /list?list= [36m304 [0m133.664 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.343 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m5.812 ms - 1212[0m
+[0mGET /upload?upload= [36m304 [0m20.469 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.315 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.720 ms - 1212[0m
+[0mPOST /upload [36m302 [0m1075.705 ms - 56[0m
+[0mGET /upload [32m200 [0m20.288 ms - 1013[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.423 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.605 ms - 1212[0m
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.ndb' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.nhr' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.nin' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.not' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.nsq' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.ntf' ]
+[ 'smith', 'Oct20-3-F-PREMIX', 'fasta.nto' ]
+[0mGET /list?list= [32m200 [0m118.221 ms - 9771[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.336 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m5.928 ms - 1212[0m
+[0mPOST /list [36m302 [0m13.521 ms - 52[0m
+smith_Oct20-3-F-PREMIX.fasta-->smith_hufis.fasta
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ndb' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nhr' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nin' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nog' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nos' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.not' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nsq' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.ntf' ]
+[ 'sample', 'H.sapiens_mitochondrial', 'fasta.nto' ]
+[ 'smith', 'hufis', 'fasta' ]
+[ 'smith', 'hufis', 'fasta.ndb' ]
+[ 'smith', 'hufis', 'fasta.nhr' ]
+[ 'smith', 'hufis', 'fasta.nin' ]
+[ 'smith', 'hufis', 'fasta.not' ]
+[ 'smith', 'hufis', 'fasta.nsq' ]
+[ 'smith', 'hufis', 'fasta.ntf' ]
+[ 'smith', 'hufis', 'fasta.nto' ]
+[0mGET /list [32m200 [0m118.839 ms - 9683[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.460 ms - -[0m
+[0mGET /favicon.ico [33m404 [0m4.183 ms - 1212[0m

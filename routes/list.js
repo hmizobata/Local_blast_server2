@@ -74,7 +74,7 @@ router.get('/', (req, res, next) => {
 
 		//DB内ファイルを一つずつ取得し、ddata1にぶちこむ。最後にsort。
 		files.forEach(file => {
-			if(permitted_filetypes.test(file)){
+			if(permitted_filetypes.test(file) && file != "sample_H.sapiens_mitochondrial.fasta"){
 				ddata1.push(file);
 			}
 		});

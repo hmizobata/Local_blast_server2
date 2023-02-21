@@ -1,4 +1,6 @@
-{
+#!/bin/bash
+
+echo '{
   "filetypes": {
       "permitted_filetypes_upload":"[.](fasta|fa|fsa|fna|aa)([.]gz|)$",
       "permitted_filetypes_list":"[.](fasta|fa|fsa|fna|aa)($|[.])",
@@ -13,5 +15,6 @@
       "uploadplace":"./uploads/",
       "errorplace":"/local_blast_server/local_blast_server/error/"
   },
-  "url": {
-"seqserver":"https://www.google.com/?hl=ja"}}
+  "url": {';
+
+echo '"seqserver":"'$1'"}}'
